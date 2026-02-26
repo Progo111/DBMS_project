@@ -12,6 +12,7 @@ services:
     volumes:
       - pawnshop_data:/var/lib/mysql
       - ./schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./trigers.sql:/docker-entrypoint-initdb.d/02_trigers.sql:ro
 
 volumes:
   pawnshop_data:

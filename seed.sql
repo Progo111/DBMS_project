@@ -74,32 +74,32 @@ INSERT INTO AppraiserSpecialities (assigned_date, appraiser_id, specialty_id) VA
 
 -- ===== залоги + предметы =====
 -- 1) Jewelry pledge (Active)
-INSERT INTO Pledges (pledge_date, pledge_amount, status_id, storage_item_days, client_id, category)
-VALUES ('2025-10-05', 25000, 1, 30, @client1, 'Jewelry');
+INSERT INTO Pledges (pledge_date, pledge_amount, status_id, storage_item_days, client_id)
+VALUES ('2025-10-05', 25000, 1, 30, @client1);
 SET @pledge1 := LAST_INSERT_ID();
 
 INSERT INTO Jewelry (pledge_id, item_name, metal, gemstone)
 VALUES (@pledge1, 'Ring', 'Gold 585', 'Diamond');
 
 -- 2) Home appliance pledge (Redeemed)
-INSERT INTO Pledges (pledge_date, pledge_amount, status_id, storage_item_days, client_id, category)
-VALUES ('2025-09-18', 18000, 2, 21, @client2, 'HomeAppliances');
+INSERT INTO Pledges (pledge_date, pledge_amount, status_id, storage_item_days, client_id)
+VALUES ('2025-09-18', 18000, 2, 21, @client2);
 SET @pledge2 := LAST_INSERT_ID();
 
 INSERT INTO HomeAppliances (pledge_id, item_name, brand, model, serial_number)
 VALUES (@pledge2, 'Laptop', 'Lenovo', 'ThinkPad T14', 'SN-LNV-001122');
 
 -- 3) Jewelry pledge (Overdue)
-INSERT INTO Pledges (pledge_date, pledge_amount, status_id, storage_item_days, client_id, category)
-VALUES ('2025-08-12', 42000, 3, 14, @client3, 'Jewelry');
+INSERT INTO Pledges (pledge_date, pledge_amount, status_id, storage_item_days, client_id)
+VALUES ('2025-08-12', 42000, 3, 14, @client3);
 SET @pledge3 := LAST_INSERT_ID();
 
 INSERT INTO Jewelry (pledge_id, item_name, metal, gemstone)
 VALUES (@pledge3, 'Necklace', 'Silver 925', 'None');
 
 -- 4) Home appliance pledge (Active)
-INSERT INTO Pledges (pledge_date, pledge_amount, status_id, storage_item_days, client_id, category)
-VALUES ('2025-10-20', 9000, 1, 10, @client4, 'HomeAppliances');
+INSERT INTO Pledges (pledge_date, pledge_amount, status_id, storage_item_days, client_id)
+VALUES ('2025-10-20', 9000, 1, 10, @client4);
 SET @pledge4 := LAST_INSERT_ID();
 
 INSERT INTO HomeAppliances (pledge_id, item_name, brand, model, serial_number)

@@ -57,7 +57,13 @@ CREATE TABLE
         category VARCHAR(64) NULL,
         PRIMARY KEY (pledge_id),
         CONSTRAINT fk_pledges_client FOREIGN KEY (client_id) REFERENCES Clients (client_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-        CONSTRAINT fk_pledges_status FOREIGN KEY (status_id) REFERENCES Statuses (status_id) ON UPDATE CASCADE ON DELETE RESTRICT
+        CONSTRAINT fk_pledges_status FOREIGN KEY (status_id) REFERENCES Statuses (status_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+        CONSTRAINT chk_pledges_category CHECK (
+            category IS NULL
+            OR category IN ('Jewelry', 'HomeAppliances')
+        ),
+        CONSTRAINT chk_pledges_amount CHECK (pledge_amount > 0),
+        CONSTRAINT chk_pledges_days CHECK (storage_item_days > 0)
     );
 
 CREATE TABLE
@@ -84,13 +90,14 @@ CREATE TABLE
 CREATE TABLE
     Appraisals (
         appraisal_id INT NOT NULL AUTO_INCREMENT,
-        appraisal_value INT NULL,
+        appraisal_value INT NOT NULL,
         appraisal_date DATE NOT NULL,
         pledge_id INT NOT NULL,
         appraiser_id INT NOT NULL,
         PRIMARY KEY (appraisal_id, pledge_id, appraiser_id),
         CONSTRAINT fk_appraisals_pledge FOREIGN KEY (pledge_id) REFERENCES Pledges (pledge_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-        CONSTRAINT fk_appraisals_appraiser FOREIGN KEY (appraiser_id) REFERENCES Appraisers (appraiser_id) ON UPDATE CASCADE ON DELETE RESTRICT
+        CONSTRAINT fk_appraisals_appraiser FOREIGN KEY (appraiser_id) REFERENCES Appraisers (appraiser_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+        CONSTRAINT chk_appraisal_value CHECK (appraisal_value > 0)
     );
 
 CREATE TABLE
@@ -112,7 +119,8 @@ CREATE TABLE
         payment_method_id INT NOT NULL,
         PRIMARY KEY (redemption_id, pledge_id),
         CONSTRAINT fk_redemptions_pledge FOREIGN KEY (pledge_id) REFERENCES Pledges (pledge_id) ON UPDATE CASCADE ON DELETE CASCADE,
-        CONSTRAINT fk_redemptions_payment FOREIGN KEY (payment_method_id) REFERENCES PaymentMethods (payment_method_id) ON UPDATE CASCADE ON DELETE RESTRICT
+        CONSTRAINT fk_redemptions_payment FOREIGN KEY (payment_method_id) REFERENCES PaymentMethods (payment_method_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+        CONSTRAINT chk_redemptions_amount CHECK (redemption_amount > 0)
     );
 
 CREATE VIEW
