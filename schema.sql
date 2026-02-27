@@ -2,6 +2,8 @@ CREATE DATABASE IF NOT EXISTS pawnshop;
 
 USE pawnshop;
 
+SET GLOBAL local_infile = 1;
+
 CREATE TABLE
     Statuses (
         status_id INT NOT NULL,
@@ -95,7 +97,7 @@ CREATE TABLE
         pledge_id INT NOT NULL,
         appraiser_id INT NOT NULL,
         PRIMARY KEY (appraisal_id, pledge_id, appraiser_id),
-        CONSTRAINT fk_appraisals_pledge FOREIGN KEY (pledge_id) REFERENCES Pledges (pledge_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+        CONSTRAINT fk_appraisals_pledge FOREIGN KEY (pledge_id) REFERENCES Pledges (pledge_id) ON UPDATE CASCADE ON DELETE CASCADE,
         CONSTRAINT fk_appraisals_appraiser FOREIGN KEY (appraiser_id) REFERENCES Appraisers (appraiser_id) ON UPDATE CASCADE ON DELETE RESTRICT,
         CONSTRAINT chk_appraisal_value CHECK (appraisal_value > 0)
     );
